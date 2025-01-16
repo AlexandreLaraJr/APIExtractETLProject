@@ -90,12 +90,12 @@ if __name__ == "__main__":
             dados_json = extractBitCoinValue()
             if dados_json:
                 dados_tratados = transformDataBitcoin(dados_json)
-                print("Dados Tratados:", dados_tratados)
+                logger.info("Dados Tratados:", dados_tratados)
                 saveDataPostgres(dados_tratados)
             time.sleep(15)
         except KeyboardInterrupt:
-            print("\nProcesso interrompido pelo usuário. Finalizando...")
+            logger.info("\nProcesso interrompido pelo usuário. Finalizando...")
             break
         except Exception as e:
-            print(f"Erro durante a execução: {e}")
+            logger.error(f"Erro durante a execução: {e}")
             time.sleep(15)
