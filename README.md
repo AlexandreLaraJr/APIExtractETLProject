@@ -29,8 +29,6 @@ Este projeto consiste em uma solução completa para coleta, armazenamento e vis
     -   logfire
     -   psycopg2-binary
     -   streamlit
-    -   pandas
-    -   plotly
 
 ## Configuração do Ambiente
 
