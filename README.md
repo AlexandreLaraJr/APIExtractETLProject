@@ -1,64 +1,137 @@
-# Projeto ETL com Python e Requests
+# Sistema de Monitoramento de Preços do Bitcoin
 
-Este projeto implementa um pipeline ETL (Extração, Transformação, Carregamento) usando Python e a biblioteca `requests` para buscar dados de APIs externas.
+Este projeto consiste em uma solução completa para coleta, armazenamento e visualização de dados de preços do Bitcoin. O sistema é composto por uma pipeline ETL automatizada que coleta dados da Coinbase e um dashboard interativo para visualização das informações.
 
-## Visão Geral
+## Funcionalidades
 
-Este pipeline ETL:
+### Pipeline ETL
 
--   Extrai dados de várias APIs REST usando a biblioteca requests
--   Transforma os dados brutos em um formato estruturado
--   Carrega os dados processados em um destino final (ex: banco de dados, arquivos CSV)
+-   Coleta automática de dados em tempo real da API Coinbase.
+-   Transformação e processamento dos dados.
+-   Armazenamento em banco de dados PostgreSQL.
+-   Sistema de logging robusto.
 
-## Requisitos
+### Dashboard
 
--   Python 3.8+
--   requests
--   pandas
--   python-dotenv
+-   Visualização interativa dos preços do Bitcoin.
+-   Gráficos de tendências e variações.
+-   Atualização em tempo real.
+-   Interface intuitiva construída com Streamlit.
 
-## Como Começar
+## Pré-requisitos
 
-1. Clone este repositório
-2. Crie um ambiente virtual:
-    ```bash
-    python -m venv venv
-    source venv/bin/activate  # Linux/Mac
-    venv\Scripts\activate     # Windows
-    ```
-3. Instale as dependências:
-    ```bash
-    pip install -r requirements.txt
-    ```
-4. Crie um arquivo `.env` com suas credenciais da API:
-    ```
-    API_KEY=sua_chave_api
-    API_SECRET=seu_segredo_api
-    ```
+-   Python 3.x
+-   PostgreSQL
+-   Pacotes Python necessários (instalar via `pip install -r requirements.txt`):
+    -   requests
+    -   sqlalchemy
+    -   python-dotenv
+    -   logfire
+    -   psycopg2-binary
+    -   streamlit
+    -   pandas
+    -   plotly
 
-## Uso
+## Configuração do Ambiente
 
-Execute o pipeline ETL:
+1. Clone o repositório:
 
 ```bash
-python main.py
+git clone https://github.com/AlexandreLaraJr/APIExtractETLProject.git
+cd APIExtractETLProject
 ```
 
-## Configuração
+2. Crie um arquivo `.env` no diretório raiz com as seguintes variáveis:
 
-O pipeline ETL pode ser configurado usando o arquivo `config/config.yaml`. Modifique as configurações de acordo com suas necessidades:
+```
+POSTGRES_USER=seu_usuario
+POSTGRES_PASSWORD=sua_senha
+POSTGRES_HOST=seu_host
+POSTGRES_PORT=sua_porta
+POSTGRES_DB=seu_banco
+```
 
--   Endpoints da API
--   Regras de transformação de dados
--   Destinos de saída
+## Estrutura do Projeto
 
-## Como Contribuir
+```
+├── src/
+│   ├── pipeline_03.py    # Script da pipeline ETL
+│   ├── dashboard_01.py   # Aplicação do dashboard
+│   └── database.py       # Configuração do banco de dados
+├── .env                  # Variáveis de ambiente
+├── requirements.txt      # Dependências do projeto
+└── README.md
+```
 
-1. Faça um fork do repositório
-2. Crie uma nova branch
-3. Faça suas alterações
-4. Envie um pull request
+## Como Usar
 
-## Licença
+### Executando a Pipeline ETL
 
-Este projeto está licenciado sob a Licença MIT - veja o arquivo LICENSE para detalhes.
+Para iniciar a coleta de dados:
+
+```bash
+python src/pipeline_03.py
+```
+
+A pipeline irá:
+
+-   Coletar dados da Coinbase a cada 15 segundos.
+-   Processar e armazenar os dados no PostgreSQL.
+-   Registrar todas as operações através do sistema de logging.
+
+### Executando o Dashboard
+
+Para iniciar a visualização dos dados:
+
+```bash
+streamlit run src/dashboard_01.py
+```
+
+O dashboard oferece:
+
+-   Visualização em tempo real dos preços.
+-   Gráficos interativos.
+-   Análises estatísticas.
+-   Filtros temporais.
+
+## Monitoramento e Logging
+
+O sistema utiliza Logfire para um monitoramento completo:
+
+-   Registro de todas as operações da pipeline.
+-   Monitoramento de performance.
+-   Rastreamento de erros.
+-   Métricas de execução.
+
+## Tratamento de Erros
+
+Implementamos tratamento robusto para diversos cenários:
+
+-   Falhas de conexão com a API.
+-   Problemas no banco de dados.
+-   Erros de processamento.
+-   Interrupções do sistema.
+
+## Manutenção
+
+### Pipeline
+
+-   Verificar logs regularmente.
+-   Monitorar uso do banco de dados.
+-   Atualizar credenciais quando necessário.
+
+### Dashboard
+
+-   Verificar performance das consultas.
+-   Atualizar visualizações conforme necessidade.
+-   Monitorar uso de recursos.
+
+## Autor
+
+-   Alexandre Lara.
+
+## Agradecimentos
+
+-   Coinbase pela disponibilização da API.
+-   Comunidade open source pelas ferramentas utilizadas.
+-   Luciano Galvão Filho, pela aula do projeto.
