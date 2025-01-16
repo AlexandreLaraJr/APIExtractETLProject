@@ -81,6 +81,28 @@ def saveDataPostgres(dados):
     finally:
         session.close()
 
+def pipeline_bitcoin():
+    """Executa a pipeline de ETL do Bitcoin com spans do Logfire."""
+    with logfire.span("Executando pipeline ETL Bitcoin"):
+        
+        with logfire.span("Extrair Dados da API Coinbase"):
+            dados_json = extractBitCoinValue()
+        
+        if not dados_json:
+            logger.error("Falha na extração dos dados. Abortando pipeline.")
+            return
+        
+        with logfire.span("Tratar Dados do Bitcoin"):
+            dados_tratados = transformDataBitcoin(dados_json)
+        
+        with logfire.span("Salvar Dados no Postgres"):
+            saveDataPostgres(dados_tratados)
+
+        # Exemplo de log final com placeholders
+        logger.info(
+            f"Pipeline finalizada com sucesso!"
+        )
+
 if __name__ == "__main__":
     createTable()
     logger.info("Iniciando ETL com atualização a cada 15 segundos... (CTRL+C para interromper)")
