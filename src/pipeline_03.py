@@ -109,11 +109,7 @@ if __name__ == "__main__":
 
     while True:
         try:
-            dados_json = extractBitCoinValue()
-            if dados_json:
-                dados_tratados = transformDataBitcoin(dados_json)
-                logger.info("Dados Tratados:", dados_tratados)
-                saveDataPostgres(dados_tratados)
+            pipeline_bitcoin()
             time.sleep(15)
         except KeyboardInterrupt:
             logger.info("\nProcesso interrompido pelo usuário. Finalizando...")
